@@ -38,7 +38,7 @@ export async function login(req, res, next) {
     const existing = await User.findOne({ email: value.email });
     if (!existing) return res.status(409).json({ message: 'Email does not exist' });
 
-    if (!(await bcrypt.compare(value.password, existing.passwordHash))) return res.status(410).json({ message: 'Password is incorrect' });
+    if (!(await existing.comparePassword(value.password))) return res.status(410).json({ message: 'Password is incorrect' });
 
     res.status(200).json({ token: signToken(existing),user: publicUser(existing) });
   } catch (err) {
