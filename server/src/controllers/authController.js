@@ -40,7 +40,7 @@ export async function login(req, res, next) {
 
     if (!(await bcrypt.compare(value.password, existing.passwordHash))) return res.status(410).json({ message: 'Password is incorrect' });
 
-    res.status(201).json({ token: signToken(existing),user: publicUser(existing) });
+    res.status(200).json({ token: signToken(existing),user: publicUser(existing) });
   } catch (err) {
     next(err);
   }
